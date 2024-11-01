@@ -102,16 +102,37 @@ const AutoCaptureWithStencils = ({ processImage }) => {
 
   return (
     <div>
-      <video ref={videoRef} autoPlay playsInline style={{ display: "none" }} />
-      <h3>Stencil Capture Process</h3>
-      <div style={{ display: "flex", gap: "10px" }}>
+      <h3>Camera with Stencil Overlay</h3>
+      <div style={{ position: "relative", width: "640px", height: "480px" }}>
+        <video ref={videoRef} autoPlay playsInline style={{ width: "100%", height: "100%" }} />
+        {stencilsMetadata.map((stencil, index) =>
+          index === currentStencil ? (
+            <img
+              key={stencil.id}
+              src={stencil.svg}
+              alt={stencil.name}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                pointerEvents: "none",
+              }}
+            />
+          ) : null
+        )}
+      </div>
+
+      <h3>Captured Images</h3>
+      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
         {stencilsMetadata.map((stencil, index) => (
           <div key={index} style={{ border: "1px solid #ccc", padding: "10px" }}>
             {captures[index] ? (
               <img src={captures[index]} alt={`stencil-${index}`} width="100" />
             ) : (
               <div style={{ width: "100px", height: "100px", background: "lightgray" }}>
-                {index === currentStencil && <img src={stencil.svg} alt={stencil.name} width="100" />}
+                <p>Waiting...</p>
               </div>
             )}
           </div>
