@@ -105,22 +105,19 @@ const AutoCaptureWithStencils = ({ processImage }) => {
       <h3>Camera with Stencil Overlay</h3>
       <div style={{ position: "relative", width: "640px", height: "480px" }}>
         <video ref={videoRef} autoPlay playsInline style={{ width: "100%", height: "100%" }} />
-        {stencilsMetadata.map((stencil, index) =>
-          index === currentStencil ? (
-            <img
-              key={stencil.id}
-              src={stencil.svg}
-              alt={stencil.name}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                pointerEvents: "none",
-              }}
-            />
-          ) : null
+        {currentStencil < stencilsMetadata.length && (
+          <img
+            src={stencilsMetadata[currentStencil].svg}
+            alt={stencilsMetadata[currentStencil].name}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              pointerEvents: "none",
+            }}
+          />
         )}
       </div>
 
@@ -131,7 +128,7 @@ const AutoCaptureWithStencils = ({ processImage }) => {
             {captures[index] ? (
               <img src={captures[index]} alt={`stencil-${index}`} width="100" />
             ) : (
-              <div style={{ width: "100px", height: "100px", background: "lightgray" }}>
+              <div style={{ width: "100px", height: "100px", background: "lightgray", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <p>Waiting...</p>
               </div>
             )}
